@@ -61,21 +61,21 @@ chmod u=rwx,g=wx,o=wx ./machop5/tentacruel
 chmod 355 ./machop5/bellossom
 
 # 3 task
-#cat cubchoo6/hypno blitzle4/kingdra > eelektross6_95
-#ln -s eelektross6_95 cubchoo6/scraftyeelektross
-#cp eelektross6 machop5/bellossom
-#sudo cat donphan5 > cubchoo6/samurottdomphan
-#ln -s cubchoo6/ Copy_16
-#ln lickilicky3 cubchoo6/vullabylicklicky
-#sudo cp -r blitzle4/ machop5/bellossom
+cat cubchoo6/hypno blitzle4/kingdra > eelektross6_95
+ln -s eelektross6_95 cubchoo6/scraftyeelektross
+cp eelektross6 machop5/bellossom
+sudo cat donphan5 > cubchoo6/samurottdomphan
+ln -s cubchoo6/ Copy_16
+ln lickilicky3 cubchoo6/vullabylicklicky
+sudo cp -r blitzle4/ machop5/bellossom
 
 # 4 task
 
-# 1 ex: 
+# 1 ex:
+find . -type f -exec wc -l {} + 2>/dev/null | sort -n
 
 # 2 ex:
 sudo ls blitzle4/ | sort -r | 2>file.txt
-
 
 # 3 ex:
 sudo ls blitzle4/ | sort -r | 2>file.txt
@@ -93,5 +93,7 @@ ls -lR | grep "li"| sort -k 2 -r | tail -n 4 | 2>1 cat
 grep -rh . ./ 
 # вывод содержимого всех файлов /lab0 начинающихся на 
 grep . -rs --include="\c*" ./
-
+# 6 task
+rm eelektross6
+rm ./blitzle4/kingdra
 
