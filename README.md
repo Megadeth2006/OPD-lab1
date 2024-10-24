@@ -139,10 +139,10 @@ sudo ls blitzle4/ | sort -r | 2>tmp/file.txt
 ls -r1 | sort
 
 # 5 ex
-grep . -r --include="\c*" ./ | sort | 2>1 cat
+grep . -r --include="\c*" ./ | sort | 2>&1
 
 # 6 ex
-ls -lR | grep "li"| sort -k 2 -r | tail -n 4 | 2>1 cat
+ls -lR | grep "li"| sort -k 2 -r | tail -n 4 | 2>&1 cat
 
 # 5 task
 rm eelektross6
@@ -151,8 +151,5 @@ rm cubchoo6/scraftyeelektro*
 rm cubchoo6/vullabylickilic*
 rm -r blitzle4
 rm blitzle4/quilava
-
-
-
 ```
 
