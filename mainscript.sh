@@ -84,7 +84,6 @@ sudo ls blitzle4/ | sort -r | 2>file.txt
 ls -r1 | sort
 
 # 5 ex
-
 grep . -r --include="\l*" ./ | sort | 2>1 cat
 
 # 6 ex
@@ -97,10 +96,3 @@ rm cubchoo6/scraftyeelektro*
 rm cubchoo6/vullabylickilic*
 rm -r blitzle4
 rm blitzle4/quilava
-
-```bash
-# вывод содержимого всех файлов 
-grep -rh . ./ 
-# вывод содержимого всех файлов /lab0 начинающихся на с
-grep . -rs --include="\c*" ./
-```
