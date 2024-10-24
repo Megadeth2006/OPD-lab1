@@ -1,10 +1,10 @@
 # Лабораторная работа по ОПД №1
 
 ### 1. Создать приведенное в варианте дерево каталогов и файлов с содержимым. В качестве корня дерева использовать каталог lab0 своего домашнего каталога. Для создания и навигации по дереву использовать команды: mkdir, echo, cat, touch, ls, pwd, cd, more, cp, rm, rmdir, mv.
-
-<div style="background-color: white; width: 500px; height: 700px; display: flex; justify-content: center; align-items: center;">
-    <img src="./src/tree.png" style="max-width: 100%; max-height: 100%;">
+<div style="background-color: white; padding: 10px; display: inline-block;">
+    <img src="./src/tree.png" alt="Image" style="max-width: 100%;">
 </div>
+
 ## 2. Установить согласно заданию права на файлы и каталоги при помощи команды chmod, используя различные способы указания прав.
 
 - blitzle4: права 317
