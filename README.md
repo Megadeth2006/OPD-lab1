@@ -53,7 +53,7 @@
 - Удалить директорию lab0/blitzle4/quilava
 
 ```bash
-#!/bin/bash
+#!/bin/sh
 
 # 1 task
 mkdir lab0
@@ -130,16 +130,16 @@ sudo cp -r blitzle4/ machop5/bellossom
 find . -type f -exec wc -l {} + 2>/dev/null | sort -n
 
 # 2 ex:
-sudo ls blitzle4/ | sort -r | 2>file.txt
+sudo ls blitzle4/ | sort -r | 2>/tmp/file.txt
 
 # 3 ex:
-sudo ls blitzle4/ | sort -r | 2>file.txt
+sudo ls blitzle4/ | sort -r | 2>tmp/file.txt
 
 # 4 ex:
 ls -r1 | sort
 
 # 5 ex
-grep . -r --include="\l*" ./ | sort | 2>1 cat
+grep . -r --include="\c*" ./ | sort | 2>1 cat
 
 # 6 ex
 ls -lR | grep "li"| sort -k 2 -r | tail -n 4 | 2>1 cat
@@ -151,6 +151,7 @@ rm cubchoo6/scraftyeelektro*
 rm cubchoo6/vullabylickilic*
 rm -r blitzle4
 rm blitzle4/quilava
+
 
 
 ```
