@@ -89,11 +89,18 @@ grep . -r --include="\l*" ./ | sort | 2>1 cat
 
 # 6 ex
 ls -lR | grep "li"| sort -k 2 -r | tail -n 4 | 2>1 cat
-# вывод содержимого всех файлов 
-grep -rh . ./ 
-# вывод содержимого всех файлов /lab0 начинающихся на 
-grep . -rs --include="\c*" ./
+
 # 6 task
 rm eelektross6
 rm ./blitzle4/kingdra
+rm cubchoo6/scraftyeelektro*
+rm cubchoo6/vullabylickilic*
+rm -r blitzle4
+rm blitzle4/quilava
 
+```bash
+# вывод содержимого всех файлов 
+grep -rh . ./ 
+# вывод содержимого всех файлов /lab0 начинающихся на с
+grep . -rs --include="\c*" ./
+```
