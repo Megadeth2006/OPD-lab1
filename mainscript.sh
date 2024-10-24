@@ -89,7 +89,7 @@ grep . -r --include="\l*" ./ | sort | 2>1 cat
 # 6 ex
 ls -lR | grep "li"| sort -k 2 -r | tail -n 4 | 2>1 cat
 
-# 6 task
+# 5 task
 rm eelektross6
 rm ./blitzle4/kingdra
 rm cubchoo6/scraftyeelektro*
