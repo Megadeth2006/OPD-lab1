@@ -1,57 +1,49 @@
-#!/bin/bash
+#!/bin/sh
 
-# Функция для получения данных о процессе
-get_process_info() {
-    local pid="$1"  # PID процесса
-    local indent="$2"  # Отступ для форматирования (рекурсивный вывод)
+# Проверка наличия аргумента
+if [ -z "$1" ]; then
+    echo "Usage: $0 <target-pid>"
+    exit 1
+fi
 
-    # Проверяем существование каталога процесса
-    if [ ! -d "/proc/$pid" ]; then
-        echo "${indent}Процесс с PID $pid не найден или нет доступа."
+TARGET_PID=$1
+
+# Проверка, смонтирован ли procfs
+if ! mount | grep -q "/proc"; then
+    echo "procfs is not mounted. Mounting it..."
+    sudo mount -t procfs proc /proc || { echo "Failed to mount procfs"; exit 1; }
+fi
+
+# Функция для вывода данных о процессе
+process_info() {
+    local pid=$1
+    local indent=$2
+
+    # Проверка, существует ли процесс
+    if [ ! -d /proc/$pid ]; then
+        echo "${indent}Process $pid not found"
         return
     fi
 
-    # Название утилиты
-    local name=$(cat "/proc/$pid/comm" 2>/dev/null || echo "[неизвестно]")
-    echo "${indent}PID = $pid"
-    echo "${indent}Название утилиты: $name"
-
+    # Название процесса
+    local cmd=$(cat /proc/$pid/cmdline 2>/dev/null | tr '\0' ' ' || echo "N/A")
+    
     # Открытые файловые дескрипторы
-    echo "${indent}Открытые файловые дескрипторы:"
-    if ls "/proc/$pid/fd" &>/dev/null; then
-        ls -l "/proc/$pid/fd" 2>/dev/null | awk -v indent="$indent" '{if (NR>1) print indent "  " $9 " -> " $11}'
-    else
-        echo "${indent}  [нет данных]"
-    fi
+    local fds=$(ls /proc/$pid/fd 2>/dev/null | wc -l || echo "N/A")
 
     # Дочерние процессы
-    echo "${indent}Дочерние процессы:"
-    local children=$(grep -l "^PPid:\s*$pid" /proc/*/status 2>/dev/null | grep -oP "/proc/\\d+" | grep -oP "\\d+")
+    local children=$(pgrep -P $pid)
 
-    if [ -z "$children" ]; then
-        echo "${indent}  [нет дочерних процессов]"
-    else
-        for child_pid in $children; do
-            echo "${indent}  PID дочернего процесса: $child_pid"
-        done
-        # Рекурсивно вызываем для дочерних процессов
-        for child_pid in $children; do
-            get_process_info "$child_pid" "${indent}    "
-        done
-    fi
+    echo "${indent}PID: $pid"
+    echo "${indent}  Command: $cmd"
+    echo "${indent}  Open File Descriptors: $fds"
+    echo "${indent}  Child Processes: $children"
+
+    # Рекурсивно обрабатывать дочерние процессы
+    for child in $children; do
+        process_info $child "${indent}  "
+    done
 }
 
-# Проверка аргументов
-if [ $# -ne 1 ]; then
-    echo "Использование: $0 <PID>"
-    exit 1
-fi
-
-# Проверяем, что PID — это число
-if ! [[ $1 =~ ^[0-9]+$ ]]; then
-    echo "Ошибка: PID должен быть числом."
-    exit 1
-fi
-
-# Запуск функции с начальным PID
-get_process_info "$1" ""
+# Запуск обработки целевого PID
+process_info $TARGET_PID ""
