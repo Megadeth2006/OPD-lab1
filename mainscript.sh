@@ -71,7 +71,7 @@ cp -r blitzle4/ machop5/bellossom
 
 # 4 task
 
-mddir tmp
+mkdir tmp
 # 1 ex:
 find . -type f -exec wc -l {} + 2>/dev/null | sort -n
 
@@ -97,3 +97,4 @@ rm cubchoo6/scraftyeelektro*
 rm cubchoo6/vullabylickilic*
 rm -r blitzle4
 rm blitzle4/quilava
+

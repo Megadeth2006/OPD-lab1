@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-get_proc_info() {
+get_process_info() {
     local pid="$1"
     if [ ! -d "/proc/$pid" ]; then
         echo "Процесс с PID $pid не найден."
@@ -24,7 +24,7 @@ get_proc_info() {
             echo "Нет дочерних процессов."
         else
             for child in $children; do
-                get_proc_info "$child"
+                get_process_info "$child"
             done
         fi
     else
@@ -32,4 +32,4 @@ get_proc_info() {
     fi
 }
 
-get_proc_info "$1"
+get_process_info "$1"
