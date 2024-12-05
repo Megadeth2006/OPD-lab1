@@ -1,50 +1,35 @@
 #!/bin/bash
 
-get_info() {
-    local indent="$1"
-    local ppid="$2"
-    shift 2
-    local pid_array=("$@")
-    for pid in "${pid_array[@]}"; do
-        echo -n "$indent"
-        echo "PPid = $ppid"
-        echo -n "$indent"
-        echo -e "PID = $pid"
-        echo -n "$indent"
-        echo "Название запущенной утилиты: $(cat /proc/$pid/comm 2>/dev/null)"
-    echo -n "$indent"
-    echo "Открытые файловые дескрипторы:"
-    echo "$(ls -l /proc/$pid/fd 2>/dev/null| grep -oP '\d+\s+->\s+.+')" > ds
-    while IFS= read -r line; do
-        echo -n "$indent"
-        echo $line
-    done <<< ds
-    tmp=$(grep -PH "PPid:\s$pid" /proc/*/status)    
-    arr=()
-    while IFS= read -r line; do
-        a=$(echo "$line" | grep -oP '/proc/\d+')
-        child=$(echo "$a" | grep -oP '\d+')
-        if [ -n "$child" ]; then
-            arr+=("$child")
-        fi
-    done <<< "$tmp"
-    echo -n "$indent"
-    echo "PID дочерних процессов:"
-    for el in "${arr[@]}"; do
-        echo -n "$indent"
-        echo "$el"
-    done
-    for el in "${arr[@]}"; do
-        echo -n "$indent"
-        echo "$el"
-    done
-    for el in "${arr[@]}"; do
-        get_info "$indent   " "$pid" "$el"
-    done
-    done
 
+get_process_info() {
+    local pid="$1"
+    if [ ! -d "/proc/$pid" ]; then
+        echo "Процесс с PID $pid не найден."
+        return
+    fi
+
+    local name=$(cat /proc/$pid/comm)
+    echo "Процесс c PID - $pid: $name "
+
+    echo "Открытые файловые дескрипторы:"
+    ls -l /proc/$pid/fd | awk '{print $9,$10,$11}'
+
+    echo "Дочерние процессы:"
+    local children_path="/proc/$pid/task/$pid/children"
+
+    if [ -e "$children_path" ]; then
+        local children=$(cat "$children_path")
+
+        if [ -z "$children" ]; then
+            echo "Нет дочерних процессов."
+        else
+            for child in $children; do
+                get_process_info "$child"
+            done
+        fi
+    else
+        echo "Не удалось получить дочерние процессы."
+    fi
 }
 
-indent=""
-start_pid=$1
-get_info "$indent" "0" "$start_pid"
+get_process_info "$1"
